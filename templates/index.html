@@ -7,6 +7,19 @@
   <title>ToDo</title>
 </head>
 <body>
-  <h1>{{.data}}</h1>
+  <form action="/new" method="post">
+    <label for="text">ToDo</label>
+    <input type="text" name="text">
+    <input type="submit" value="Send">
+  </form>
+
+  <h2>Lists</h2>
+  <ul>
+    <li>
+      <h3>sample</h3>
+      <p>2021/06/06 00:00:00</p>
+      <span><a href="#">edit</a></span>/<span><a href="#">delete</a></span>
+    </li>
+  </ul>
 </body>
 </html>
