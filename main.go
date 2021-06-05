@@ -1,11 +1,28 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 
 	_ "github.com/mattn/go-sqlite3"
 )
+
+type Todo struct {
+	gorm.Model
+	Text string
+}
+
+// DB init
+func dbInit() {
+	db, err := gorm.Open("sqlite3", "test.sqlite3")
+	if err != nil {
+		log.Fatalln("can't open DB", err)
+	}
+	db.AutoMigrate(&Todo{})
+	defer db.Close()
+}
 
 func main() {
 	router := gin.Default()
