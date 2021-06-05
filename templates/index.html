@@ -16,9 +16,11 @@
   <h2>Lists</h2>
   <ul>
     <li>
-      <h3>sample</h3>
-      <p>2021/06/06 00:00:00</p>
-      <span><a href="#">edit</a></span>/<span><a href="#">delete</a></span>
+      {{range .todos}}
+        <h3>{{.Text}}</h3>
+        <p>{{.CreatedAt}}</p>
+        <span><a href="#">edit</a></span>/<span><a href="#">delete</a></span>
+      {{end}}
     </li>
   </ul>
 </body>

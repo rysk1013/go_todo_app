@@ -47,50 +47,59 @@ func dbGetAll() []Todo {
 }
 
 // DB get one
-func dbGetOne(id int) Todo {
-	db, err := gorm.Open("sqlite3", "test.sqlite3")
-	if err != nil {
-		log.Fatalln("can't open dbGetOne", err)
-	}
-	defer db.Close()
-	var todo Todo
-	db.First(&todo, id)
-	return todo
-}
+// func dbGetOne(id int) Todo {
+// 	db, err := gorm.Open("sqlite3", "test.sqlite3")
+// 	if err != nil {
+// 		log.Fatalln("can't open dbGetOne", err)
+// 	}
+// 	defer db.Close()
+// 	var todo Todo
+// 	db.First(&todo, id)
+// 	return todo
+// }
 
 // DB update
-func dbUpdate(id int, text string) {
-	db, err := gorm.Open("sqlite3", "test.sqlite3")
-	if err != nil {
-		log.Fatalln("can't open dbUpdate", err)
-	}
-	defer db.Close()
-	var todo Todo
-	db.First(&todo, id)
-	todo.Text = text
-	db.Save(&todo)
-}
+// func dbUpdate(id int, text string) {
+// 	db, err := gorm.Open("sqlite3", "test.sqlite3")
+// 	if err != nil {
+// 		log.Fatalln("can't open dbUpdate", err)
+// 	}
+// 	defer db.Close()
+// 	var todo Todo
+// 	db.First(&todo, id)
+// 	todo.Text = text
+// 	db.Save(&todo)
+// }
 
 // DB delete
-func dbDelete(id int) {
-	db, err := gorm.Open("sqlite3", "test.sqlite3")
-	if err != nil {
-		log.Fatalln("can't open dbDelete", err)
-	}
-	defer db.Close()
-	var todo Todo
-	db.First(&todo, id)
-	db.Delete(&todo)
-}
+// func dbDelete(id int) {
+// 	db, err := gorm.Open("sqlite3", "test.sqlite3")
+// 	if err != nil {
+// 		log.Fatalln("can't open dbDelete", err)
+// 	}
+// 	defer db.Close()
+// 	var todo Todo
+// 	db.First(&todo, id)
+// 	db.Delete(&todo)
+// }
 
 func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*.html")
 
-	data := "Hello Go/Gin"
+	dbInit()
 
+	//Index
 	router.GET("/", func (ctx *gin.Context)  {
-		ctx.HTML(200, "index.html", gin.H{"data": data})
+		todos := dbGetAll()
+		ctx.HTML(200, "index.html", gin.H{"todos": todos})
+	})
+
+	//Create
+	router.POST("/new", func (ctx *gin.Context)  {
+		text := ctx.PostForm("text")
+		dbInsert(text)
+		ctx.Redirect(302, "/")
 	})
 
 	router.Run() // localhost:8080
