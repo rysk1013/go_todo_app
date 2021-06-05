@@ -18,7 +18,7 @@ type Todo struct {
 func dbInit() {
 	db, err := gorm.Open("sqlite3", "test.sqlite3")
 	if err != nil {
-		log.Fatalln("can't open DB", err)
+		log.Fatalln("can't open dbInit", err)
 	}
 	defer db.Close()
 	db.AutoMigrate(&Todo{})
@@ -28,7 +28,7 @@ func dbInit() {
 func dbInsert(text string) {
 	db, err := gorm.Open("sqlite3", "test.sqlite3")
 	if err != nil {
-		log.Fatalln("can't open DB", err)
+		log.Fatalln("can't open dbInsert", err)
 	}
 	defer db.Close()
 	db.Create(&Todo{Text: text})
@@ -38,7 +38,7 @@ func dbInsert(text string) {
 func dbGetAll() []Todo {
 	db, err := gorm.Open("sqlite3", "test.sqlite3")
 	if err != nil {
-		log.Fatalln("can't open DB", err)
+		log.Fatalln("can't open dbGetAll", err)
 	}
 	defer db.Close()
 	var todos []Todo
@@ -50,7 +50,7 @@ func dbGetAll() []Todo {
 func dbGetOne(id int) Todo {
 	db, err := gorm.Open("sqlite3", "test.sqlite3")
 	if err != nil {
-		log.Fatalln("can't open DB", err)
+		log.Fatalln("can't open dbGetOne", err)
 	}
 	defer db.Close()
 	var todo Todo
@@ -62,7 +62,7 @@ func dbGetOne(id int) Todo {
 func dbUpdate(id int, text string) {
 	db, err := gorm.Open("sqlite3", "test.sqlite3")
 	if err != nil {
-		log.Fatalln("can't open DB", err)
+		log.Fatalln("can't open dbUpdate", err)
 	}
 	defer db.Close()
 	var todo Todo
