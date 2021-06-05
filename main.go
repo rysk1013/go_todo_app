@@ -34,6 +34,18 @@ func dbInsert(text string) {
 	db.Create(&Todo{Text: text})
 }
 
+// DB get all
+func dbGetAll() []Todo {
+	db, err := gorm.Open("sqlite3", "test.swlite3")
+	if err != nil {
+		log.Fatalln("can't open DB", err)
+	}
+	defer db.Close()
+	var todos []Todo
+	db.Order("created_at desc").Find(&todos)
+	return todos
+}
+
 func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*.html")
