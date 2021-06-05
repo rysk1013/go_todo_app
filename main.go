@@ -20,8 +20,18 @@ func dbInit() {
 	if err != nil {
 		log.Fatalln("can't open DB", err)
 	}
-	db.AutoMigrate(&Todo{})
 	defer db.Close()
+	db.AutoMigrate(&Todo{})
+}
+
+// DB insert
+func dbInsert(text string) {
+	db, err := gorm.Open("sqlite3", "test.sqlite3")
+	if err != nil {
+		log.Fatalln("can't open DB", err)
+	}
+	defer db.Close()
+	db.Create(&Todo{Text: text})
 }
 
 func main() {
