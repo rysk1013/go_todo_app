@@ -19,7 +19,7 @@
       {{range .todos}}
         <h3>{{.Text}}</h3>
         <p>{{.CreatedAt}}</p>
-        <span><a href="/todos/{{.ID}}">edit</a></span>/<span><a href="#">delete</a></span>
+        <span><a href="/todos/{{.ID}}">edit</a></span>/<span><a href="/delete_check/{{.ID}}">delete</a></span>
       {{end}}
     </li>
   </ul>
