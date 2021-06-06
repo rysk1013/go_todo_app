@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo</title>
+</head>
+<body>
+  <form action="/new" method="post">
+    <label for="text">ToDo</label>
+    <input type="text" name="text" value="{{.todo.Text}}">
+    <input type="submit" value="Send">
+  </form>
+
+  <h2>Detail</h2>
+  <ul>
+    <li>
+        <h3>{{.todo.Text}}</h3>
+        <p>{{.todo.CreatedAt}}</p>
+        <span><a href="/todos/{{.todo.ID}}">edit</a></span>/<span><a href="#">delete</a></span>
+    </li>
+  </ul>
+  <span><a href="/">Back</a></span>
+</body>
+</html>
