@@ -60,17 +60,17 @@ func dbGetOne(id int) Todo {
 }
 
 // DB update
-// func dbUpdate(id int, text string) {
-// 	db, err := gorm.Open("sqlite3", "test.sqlite3")
-// 	if err != nil {
-// 		log.Fatalln("can't open dbUpdate", err)
-// 	}
-// 	defer db.Close()
-// 	var todo Todo
-// 	db.First(&todo, id)
-// 	todo.Text = text
-// 	db.Save(&todo)
-// }
+func dbUpdate(id int, text string) {
+	db, err := gorm.Open("sqlite3", "test.sqlite3")
+	if err != nil {
+		log.Fatalln("can't open dbUpdate", err)
+	}
+	defer db.Close()
+	var todo Todo
+	db.First(&todo, id)
+	todo.Text = text
+	db.Save(&todo)
+}
 
 // DB delete
 // func dbDelete(id int) {
@@ -112,6 +112,18 @@ func main() {
 		}
 		todo := dbGetOne(id)
 		ctx.HTML(200, "show.html", gin.H{"todo": todo})
+	})
+
+	//Update
+	router.POST("/update/:id", func (ctx *gin.Context)  {
+		n := ctx.Param("id")
+		id, err := strconv.Atoi(n)
+		if err != nil {
+			log.Fatalln("can't update", err)
+		}
+		text := ctx.PostForm("text")
+		dbUpdate(id, text)
+		ctx.Redirect(302, "/")
 	})
 
 	router.Run() // localhost:8080
