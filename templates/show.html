@@ -7,7 +7,7 @@
   <title>ToDo</title>
 </head>
 <body>
-  <form action="/new" method="post">
+  <form action="/update/{{.todo.ID}}" method="post">
     <label for="text">ToDo</label>
     <input type="text" name="text" value="{{.todo.Text}}">
     <input type="submit" value="Send">
