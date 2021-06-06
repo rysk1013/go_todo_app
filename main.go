@@ -126,5 +126,16 @@ func main() {
 		ctx.Redirect(302, "/")
 	})
 
+	//GET delete
+	router.GET("/delete_check/:id", func (ctx *gin.Context) {
+		n := ctx.Param("id")
+		id, err := strconv.Atoi(n)
+		if err != nil {
+			log.Fatalln("can't find delete check", err)
+		}
+		todo := dbGetOne(id)
+		ctx.HTML(200, "delete.html", gin.H{"todo":todo })
+	})
+
 	router.Run() // localhost:8080
 }
