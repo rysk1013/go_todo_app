@@ -73,16 +73,16 @@ func dbUpdate(id int, text string) {
 }
 
 // DB delete
-// func dbDelete(id int) {
-// 	db, err := gorm.Open("sqlite3", "test.sqlite3")
-// 	if err != nil {
-// 		log.Fatalln("can't open dbDelete", err)
-// 	}
-// 	defer db.Close()
-// 	var todo Todo
-// 	db.First(&todo, id)
-// 	db.Delete(&todo)
-// }
+func dbDelete(id int) {
+	db, err := gorm.Open("sqlite3", "test.sqlite3")
+	if err != nil {
+		log.Fatalln("can't open dbDelete", err)
+	}
+	defer db.Close()
+	var todo Todo
+	db.First(&todo, id)
+	db.Delete(&todo)
+}
 
 func main() {
 	router := gin.Default()
@@ -135,6 +135,17 @@ func main() {
 		}
 		todo := dbGetOne(id)
 		ctx.HTML(200, "delete.html", gin.H{"todo":todo })
+	})
+
+	//Delete
+	router.POST("/delete/:id", func (ctx *gin.Context) {
+		n := ctx.Param("id")
+		id, err := strconv.Atoi(n)
+		if err != nil {
+			log.Fatalln("can't delete", err)
+		}
+		dbDelete(id)
+		ctx.Redirect(302, "/")
 	})
 
 	router.Run() // localhost:8080
